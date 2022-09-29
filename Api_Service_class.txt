@@ -1,0 +1,19 @@
+import 'dart:convert';
+
+import 'package:http/http.dart';
+
+import 'Model.dart';
+
+class UserApiService {
+  Future<List<Todo>> fetchdata() async {
+    String BaseUrl = 'https://jsonplaceholder.typicode.com';
+    String EndUrl = '/todos';
+    var response = await get(Uri.parse(BaseUrl + EndUrl));
+    if (response.statusCode == 200) {
+      print('Data has been fetched');
+      List data = jsonDecode(response.body);
+      return data.map((e) => Todo.fromJson(e)).toList();
+    }
+    return [];
+  }
+}
